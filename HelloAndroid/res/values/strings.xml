@@ -4,5 +4,7 @@
     <string name="hello_world">Hello World!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_hello_android">HelloAndroid</string>
+    <string name="edit_message">Hello Travis!</string>
+    <string name="button_send">Send</string>
 
 </resources>
