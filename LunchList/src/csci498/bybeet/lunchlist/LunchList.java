@@ -6,7 +6,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
+import android.widget.TableLayout.LayoutParams;
 
 public class LunchList extends Activity {
 
@@ -19,6 +22,23 @@ public class LunchList extends Activity {
         
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
+        
+        //Radio button group in Java code.
+        RadioButton sitDown = new RadioButton(this);
+        sitDown.setText("Sit-Down");
+        RadioButton takeOut = new RadioButton(this);
+        takeOut.setText("Take-out");
+        RadioButton delivery = new RadioButton(this);
+        delivery.setText("Delivery");
+        RadioGroup typesGroup = new RadioGroup(this);
+        typesGroup.addView( sitDown , 0);
+        typesGroup.addView( takeOut, 1);
+        typesGroup.addView( delivery, 2);
+        
+        //setContentView(R.layout.activity_lunch_list);
+        //addContentView(typesGroup, new LayoutParams( R.layout.activity_lunch_list , 0));
+        setContentView(typesGroup);
+        
     }
 
     @Override
