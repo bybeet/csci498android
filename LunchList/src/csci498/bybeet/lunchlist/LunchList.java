@@ -35,10 +35,9 @@ public class LunchList extends Activity {
         typesGroup.addView( takeOut, 1);
         typesGroup.addView( delivery, 2);
         
-        //setContentView(R.layout.activity_lunch_list);
+        setContentView(R.layout.activity_lunch_list);
         //addContentView(typesGroup, new LayoutParams( R.layout.activity_lunch_list , 0));
-        setContentView(typesGroup);
-        
+        //setContentView(typesGroup);     
     }
 
     @Override
