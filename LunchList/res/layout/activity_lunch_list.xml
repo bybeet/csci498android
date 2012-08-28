@@ -37,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/name"
         android:layout_toLeftOf="@+id/name"
+        android:typeface="monospace"
+        android:textColor="#00FF00"
         android:text="Name:" />
 
     <EditText
@@ -54,6 +56,8 @@
         android:layout_alignBaseline="@+id/addr"
         android:layout_alignBottom="@+id/addr"
         android:layout_alignParentLeft="true"
+        android:textStyle="bold"
+        android:typeface="sans"
         android:text="Address:" />
 
     <Button
