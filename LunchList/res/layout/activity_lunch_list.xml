@@ -1,73 +1,58 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:stretchColumns="1" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    <TableRow>
+
+        <TextView android:text="Name:" />
+
+        <EditText android:id="@+id/name" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView android:text="Address:" />
+
+        <EditText android:id="@+id/addr" />
+    </TableRow>
+
+    <RadioGroup
+        android:id="@+id/types"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="216dp" >
-    </LinearLayout>
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:ems="10" >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type:" />
 
-        <requestFocus />
-    </EditText>
+        <RadioButton
+            android:id="@+id/take_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Take-Out" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/linearLayout1"
-        android:layout_centerHorizontal="true" >
-    </LinearLayout>
+        <RadioButton
+            android:id="@+id/sit_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sit-Down" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/name"
-        android:layout_toLeftOf="@+id/name"
-        android:typeface="monospace"
-        android:textColor="#00FF00"
-        android:text="Name:" />
+        <RadioButton
+            android:id="@+id/delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery" />
+    </RadioGroup>
 
-    <EditText
-        android:id="@+id/addr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_toRightOf="@+id/textView1"
-        android:ems="10" />
+  <Button android:id="@+id/save"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Save"
+  />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/addr"
-        android:layout_alignBottom="@+id/addr"
-        android:layout_alignParentLeft="true"
-        android:textStyle="bold"
-        android:typeface="sans"
-        android:text="Address:" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/addr"
-        android:layout_below="@+id/addr"
-        android:layout_marginTop="22dp"
-        android:layout_toRightOf="@+id/textView2"
-        android:text="Save" />
-
-</RelativeLayout>
+</TableLayout>

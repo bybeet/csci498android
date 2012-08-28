@@ -3,6 +3,7 @@ package csci498.bybeet.lunchlist;
 public class Restaurant {
 	private String name = "";
 	private String address = "";
+	private String type="";
 	
 	public String getName ()
 	{
@@ -22,5 +23,15 @@ public class Restaurant {
 	public void setAddress (String address)
 	{
 		this.address = address;
+	}
+	
+	public String getType()
+	{
+		return(type);
+	}
+	
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 }
