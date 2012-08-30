@@ -1,11 +1,16 @@
 package csci498.bybeet.lunchlist;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -13,7 +18,8 @@ import android.widget.TableLayout.LayoutParams;
 
 public class LunchList extends Activity {
 
-	Restaurant restaurant = new Restaurant ();
+	List<Restaurant> restaurants = new ArrayList<Restaurant> ();
+	ArrayAdapter<Restaurant> adapter = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +29,13 @@ public class LunchList extends Activity {
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
         
+        Spinner list = (Spinner)findViewById(R.id.restaurants);
+        
+        adapter = new ArrayAdapter<Restaurant>(this, android.R.layout.simple_list_item_1, restaurants);
+        list.setAdapter(adapter);
+        
         //Radio button group in Java code.
+        /*
         RadioButton sitDown = new RadioButton(this);
         sitDown.setText("Sit-Down");
         RadioButton takeOut = new RadioButton(this);
@@ -35,9 +47,9 @@ public class LunchList extends Activity {
         typesGroup.addView( takeOut, 1);
         typesGroup.addView( delivery, 2);
         
-        setContentView(R.layout.activity_lunch_list);
-        //addContentView(typesGroup, new LayoutParams( R.layout.activity_lunch_list , 0));
-        //setContentView(typesGroup);     
+        addContentView(typesGroup, new LayoutParams( R.layout.activity_lunch_list , 0));
+        setContentView(typesGroup);     
+        */
     }
 
     @Override
@@ -53,6 +65,7 @@ public class LunchList extends Activity {
 			EditText address = (EditText)findViewById(R.id.addr);
 			RadioGroup types = (RadioGroup)findViewById(R.id.types);
 			
+			Restaurant restaurant = new Restaurant();
 			restaurant.setAddress(address.getText().toString());
 			restaurant.setName(name.getText().toString());
 			
@@ -68,6 +81,8 @@ public class LunchList extends Activity {
 				restaurant.setType("delivery");
 				break;
 			}
+			
+			adapter.add(restaurant);
 		}
 	};
 }
