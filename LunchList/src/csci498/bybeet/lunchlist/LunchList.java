@@ -59,6 +59,8 @@ public class LunchList extends Activity {
 				name.setTextColor(Color.GREEN);
 			}
 		}
+		
+		
 	}
 
 	class RestaurantAdapter extends ArrayAdapter<Restaurant>{
@@ -74,7 +76,19 @@ public class LunchList extends Activity {
 			if( row == null )
 			{
 				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.row, null);
+				if (restaurants.get(position).getType().equals("sit_down")) 
+				{ 
+					row = inflater.inflate(R.layout.row, null);
+				}
+				else if (restaurants.get(position).getType().equals("take_out")) 
+				{
+					row = inflater.inflate(R.layout.row1, null);
+				}
+				else 
+				{ 
+					row = inflater.inflate(R.layout.row2, null);
+				}
+				
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
 			}
