@@ -8,9 +8,10 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -20,6 +21,8 @@ public class LunchList extends Activity {
 
 	List<Restaurant> restaurants = new ArrayList<Restaurant> ();
 	ArrayAdapter<Restaurant> adapter = null;
+	ArrayAdapter<String> adapterAddress = null;
+	List<String> addresses = new ArrayList<String> ();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,10 +32,14 @@ public class LunchList extends Activity {
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
         
-        Spinner list = (Spinner)findViewById(R.id.restaurants);
+        ListView list = (ListView)findViewById(R.id.restaurants);
+        AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.addr);
         
         adapter = new ArrayAdapter<Restaurant>(this, android.R.layout.simple_list_item_1, restaurants);
         list.setAdapter(adapter);
+        
+        adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
+        textView.setAdapter(adapterAddress);
         
         //Radio button group in Java code.
         /*
@@ -82,7 +89,13 @@ public class LunchList extends Activity {
 				break;
 			}
 			
+			adapterAddress.add(address.getText().toString());
 			adapter.add(restaurant);
+			
+			name.setText(null);
+			address.setText(null);
+			
+			
 		}
 	};
 }
