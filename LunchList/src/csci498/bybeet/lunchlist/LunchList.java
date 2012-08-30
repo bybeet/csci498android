@@ -3,8 +3,10 @@ package csci498.bybeet.lunchlist;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.color;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -44,14 +46,17 @@ public class LunchList extends Activity {
 			if (r.getType().equals("sit_down")) 
 			{ 
 				icon.setImageResource(R.drawable.ball_red);
+				name.setTextColor(Color.RED);
 			}
 			else if (r.getType().equals("take_out")) 
 			{
-				icon.setImageResource(R.drawable.ball_yellow); 
+				icon.setImageResource(R.drawable.ball_yellow);
+				name.setTextColor(Color.YELLOW);
 			}
 			else 
 			{ 
 				icon.setImageResource(R.drawable.ball_green);
+				name.setTextColor(Color.GREEN);
 			}
 		}
 	}
