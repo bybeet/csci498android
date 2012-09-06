@@ -1,13 +1,26 @@
 package csci498.bybeet.lunchlist;
 
+import java.util.Calendar;
+
 public class Restaurant {
 	private String name = "";
 	private String address = "";
 	private String type="";
+	private Calendar date = Calendar.getInstance();
+	
+	public void setDate ( int year, int month, int day )
+	{
+		date.set(year, month , day);
+	}
+	
+	public Calendar getDate ()
+	{
+		return date;
+	}
 	
 	public String getName ()
 	{
-		return (name);
+		return name;
 	}
 	
 	public void setName (String name)
@@ -17,7 +30,7 @@ public class Restaurant {
 	
 	public String getAddress ()
 	{
-		return(address);
+		return address;
 	}
 	
 	public void setAddress (String address)

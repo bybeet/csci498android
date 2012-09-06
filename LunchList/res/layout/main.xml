@@ -19,11 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <ListView
-                android:id="@+id/restaurants"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
             <TableLayout
                 android:id="@+id/details"
                 android:layout_width="match_parent"
@@ -36,7 +31,10 @@
 
                     <TextView android:text="Name:" />
 
-                    <EditText android:id="@+id/name" />
+                    <EditText android:id="@+id/name" >
+
+                        <requestFocus />
+                    </EditText>
                 </TableRow>
 
                 <TableRow>
@@ -66,6 +64,11 @@
                             android:text="Delivery" />
                     </RadioGroup>
                 </TableRow>
+				
+                <TextView android:text="Last Visited:" />
+                <DatePicker 
+                    android:id="@+id/date"
+                    android:calendarViewShown="false" />
 
                 <Button
                     android:id="@+id/save"
@@ -73,6 +76,11 @@
                     android:layout_height="wrap_content"
                     android:text="Save" />
             </TableLayout>
+
+            <ListView
+                android:id="@+id/restaurants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </FrameLayout>
     </LinearLayout>
 

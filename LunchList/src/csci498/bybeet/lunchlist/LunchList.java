@@ -2,6 +2,7 @@ package csci498.bybeet.lunchlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,6 +86,7 @@ public class LunchList extends TabActivity {
 	EditText name = null;
 	EditText address = null;
 	RadioGroup types = null;
+	DatePicker date = null;
 			
 
 	@Override
@@ -109,6 +111,7 @@ public class LunchList extends TabActivity {
 		name = (EditText)findViewById(R.id.name);
 		address = (EditText)findViewById(R.id.addr);
 		types = (RadioGroup)findViewById(R.id.types);
+		date = (DatePicker)findViewById(R.id.date);
 
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
 		spec.setContent(R.id.restaurants); 
@@ -149,6 +152,8 @@ public class LunchList extends TabActivity {
 				restaurant.setType("delivery");
 				break;
 			}
+			
+			restaurant.setDate( date.getYear(), date.getMonth(), date.getDayOfMonth() );
 
 			adapterAddress.add(address.getText().toString());
 			adapter.add(restaurant);
@@ -176,6 +181,8 @@ public class LunchList extends TabActivity {
 			else{
 				types.check(R.id.delivery);
 			}
+			
+			date.updateDate( r.getDate().get(Calendar.YEAR) , r.getDate().get(Calendar.MONTH), r.getDate().get(Calendar.DAY_OF_MONTH));
 			
 			getTabHost().setCurrentTab(1);
 		}
