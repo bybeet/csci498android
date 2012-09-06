@@ -156,7 +156,7 @@ public class LunchList extends TabActivity {
 			name.setText(null);
 			address.setText(null);
 
-
+			getTabHost().setCurrentTab(0);
 		}
 	};
 
@@ -176,6 +176,8 @@ public class LunchList extends TabActivity {
 			else{
 				types.check(R.id.delivery);
 			}
+			
+			getTabHost().setCurrentTab(1);
 		}
 	};
 }
