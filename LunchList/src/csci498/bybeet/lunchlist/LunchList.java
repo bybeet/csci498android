@@ -4,43 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.app.*;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.ListView;
-import android.widget.RadioGroup;
+import android.app.*;
+import android.widget.*;
 
 @SuppressWarnings("deprecation")
 public class LunchList extends TabActivity {
-	
+
 	static class RestaurantHolder
 	{
 		private TextView name = null;
 		private TextView address = null;
 		private ImageView icon = null;
-		
+
 		RestaurantHolder (View row)
 		{
 			name = (TextView)row.findViewById(R.id.title);
 			address = (TextView)row.findViewById(R.id.address);
 			icon = (ImageView)row.findViewById(R.id.icon);
 		}
-		
+
 		void populateFrom (Restaurant r)
 		{
 			name.setText(r.getName());
 			address.setText(r.getAddress());
-			
+
 			if (r.getType().equals("sit_down")) 
 			{ 
 				icon.setImageResource(R.drawable.ball_red);
@@ -54,25 +45,25 @@ public class LunchList extends TabActivity {
 				icon.setImageResource(R.drawable.ball_green);
 			}
 		}
-		
-		
+
+
 	}
 
 	class RestaurantAdapter extends ArrayAdapter<Restaurant>{
 		RestaurantAdapter(){
 			super(LunchList.this, android.R.layout.simple_list_item_1, restaurants);
 		}
-		
+
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
 			View row = convertView;
 			RestaurantHolder holder = null;
-			
+
 			if( row == null )
 			{
 				LayoutInflater inflater = getLayoutInflater();
 				row = inflater.inflate(R.layout.row, null);
-				
+
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
 			}
@@ -80,7 +71,7 @@ public class LunchList extends TabActivity {
 			{
 				holder = (RestaurantHolder)row.getTag();
 			}
-			
+
 			holder.populateFrom(restaurants.get(position));
 			return(row);
 		}
@@ -90,6 +81,11 @@ public class LunchList extends TabActivity {
 	RestaurantAdapter adapter = null;
 	ArrayAdapter<String> adapterAddress = null;
 	List<String> addresses = new ArrayList<String> ();
+	
+	EditText name = null;
+	EditText address = null;
+	RadioGroup types = null;
+			
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -104,12 +100,19 @@ public class LunchList extends TabActivity {
 
 		adapter = new RestaurantAdapter();
 		list.setAdapter(adapter);
+		
+		list.setOnItemClickListener(onListClick);
 
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
 		textView.setAdapter(adapterAddress);
 		
+		name = (EditText)findViewById(R.id.name);
+		address = (EditText)findViewById(R.id.addr);
+		types = (RadioGroup)findViewById(R.id.types);
+
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
-		spec.setContent(R.id.restaurants); spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
+		spec.setContent(R.id.restaurants); 
+		spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
 		getTabHost().addTab(spec);
 		spec=getTabHost().newTabSpec("tag2");
 		spec.setContent(R.id.details);
@@ -154,6 +157,25 @@ public class LunchList extends TabActivity {
 			address.setText(null);
 
 
+		}
+	};
+
+	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
+		public void onItemClick (AdapterView<?> parent, View view, int position, long id){
+			Restaurant r = restaurants.get(position);
+			
+			name.setText(r.getName());
+			address.setText(r.getAddress());
+			
+			if(r.getType().equals("sit_down")){
+				types.check(R.id.sit_down);
+			}
+			else if(r.getType().equals("take_out")){
+				types.check(R.id.take_out);
+			}
+			else{
+				types.check(R.id.delivery);
+			}
 		}
 	};
 }
