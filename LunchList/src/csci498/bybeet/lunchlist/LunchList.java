@@ -76,18 +76,7 @@ public class LunchList extends Activity {
 			if( row == null )
 			{
 				LayoutInflater inflater = getLayoutInflater();
-				if (restaurants.get(position).getType().equals("sit_down")) 
-				{ 
-					row = inflater.inflate(R.layout.row, null);
-				}
-				else if (restaurants.get(position).getType().equals("take_out")) 
-				{
-					row = inflater.inflate(R.layout.row1, null);
-				}
-				else 
-				{ 
-					row = inflater.inflate(R.layout.row2, null);
-				}
+				row = inflater.inflate(R.layout.row, null);
 				
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
@@ -124,22 +113,6 @@ public class LunchList extends Activity {
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
 		textView.setAdapter(adapterAddress);
 
-		//Radio button group in Java code.
-		/*
-        RadioButton sitDown = new RadioButton(this);
-        sitDown.setText("Sit-Down");
-        RadioButton takeOut = new RadioButton(this);
-        takeOut.setText("Take-out");
-        RadioButton delivery = new RadioButton(this);
-        delivery.setText("Delivery");
-        RadioGroup typesGroup = new RadioGroup(this);
-        typesGroup.addView( sitDown , 0);
-        typesGroup.addView( takeOut, 1);
-        typesGroup.addView( delivery, 2);
-
-        addContentView(typesGroup, new LayoutParams( R.layout.activity_lunch_list , 0));
-        setContentView(typesGroup);     
-		 */
 	}
 
 	@Override
