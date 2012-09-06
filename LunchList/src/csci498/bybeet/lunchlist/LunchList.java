@@ -122,7 +122,6 @@ public class LunchList extends Activity {
 	}
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
-		@Override
 		public void onClick(View v) {
 			EditText name = (EditText)findViewById(R.id.name);
 			EditText address = (EditText)findViewById(R.id.addr);
