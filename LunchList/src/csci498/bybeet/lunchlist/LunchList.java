@@ -3,9 +3,8 @@ package csci498.bybeet.lunchlist;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.color;
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.*;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,14 +15,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TableLayout;
-import android.widget.TableLayout.LayoutParams;
 
-public class LunchList extends Activity {
+@SuppressWarnings("deprecation")
+public class LunchList extends TabActivity {
 	
 	static class RestaurantHolder
 	{
@@ -46,17 +44,14 @@ public class LunchList extends Activity {
 			if (r.getType().equals("sit_down")) 
 			{ 
 				icon.setImageResource(R.drawable.ball_red);
-				name.setTextColor(Color.RED);
 			}
 			else if (r.getType().equals("take_out")) 
 			{
 				icon.setImageResource(R.drawable.ball_yellow);
-				name.setTextColor(Color.YELLOW);
 			}
 			else 
 			{ 
 				icon.setImageResource(R.drawable.ball_green);
-				name.setTextColor(Color.GREEN);
 			}
 		}
 		
@@ -99,7 +94,7 @@ public class LunchList extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lunch_list);
+		setContentView(R.layout.main);
 
 		Button save = (Button)findViewById(R.id.save);
 		save.setOnClickListener(onSave);
@@ -112,7 +107,15 @@ public class LunchList extends Activity {
 
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
 		textView.setAdapter(adapterAddress);
-
+		
+		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
+		spec.setContent(R.id.restaurants); spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
+		getTabHost().addTab(spec);
+		spec=getTabHost().newTabSpec("tag2");
+		spec.setContent(R.id.details);
+		spec.setIndicator("Details", getResources().getDrawable(R.drawable.restaurant));
+		getTabHost().addTab(spec);
+		getTabHost().setCurrentTab(0);
 	}
 
 	@Override
