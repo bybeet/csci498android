@@ -99,7 +99,7 @@ public class LunchList extends TabActivity {
 		save.setOnClickListener(onSave);
 
 		ListView list = (ListView)findViewById(R.id.restaurants);
-		AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.addr);
+		//AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.addr);
 
 		adapter = new RestaurantAdapter();
 		list.setAdapter(adapter);
@@ -107,7 +107,7 @@ public class LunchList extends TabActivity {
 		list.setOnItemClickListener(onListClick);
 
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
-		textView.setAdapter(adapterAddress);
+		//textView.setAdapter(adapterAddress);
 		
 		name = (EditText)findViewById(R.id.name);
 		address = (EditText)findViewById(R.id.addr);
