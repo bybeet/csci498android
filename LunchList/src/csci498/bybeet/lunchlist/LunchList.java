@@ -125,8 +125,8 @@ public class LunchList extends TabActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_lunch_list, menu);
-		return true;
+		getMenuInflater().inflate(R.menu.options, menu);
+		return (super.onCreateOptionsMenu(menu));
 	}
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
