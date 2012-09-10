@@ -84,6 +84,7 @@ public class LunchList extends TabActivity {
 	
 	EditText name = null;
 	EditText address = null;
+	EditText notes = null;
 	RadioGroup types = null;
 			
 
@@ -108,6 +109,7 @@ public class LunchList extends TabActivity {
 		
 		name = (EditText)findViewById(R.id.name);
 		address = (EditText)findViewById(R.id.addr);
+		notes = (EditText)findViewById(R.id.notes); 
 		types = (RadioGroup)findViewById(R.id.types);
 
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
@@ -132,10 +134,12 @@ public class LunchList extends TabActivity {
 			EditText name = (EditText)findViewById(R.id.name);
 			EditText address = (EditText)findViewById(R.id.addr);
 			RadioGroup types = (RadioGroup)findViewById(R.id.types);
+			EditText notes = (EditText)findViewById(R.id.notes);
 
 			Restaurant restaurant = new Restaurant();
 			restaurant.setAddress(address.getText().toString());
 			restaurant.setName(name.getText().toString());
+			restaurant.setNotes(notes.getText().toString());
 
 			switch(types.getCheckedRadioButtonId())
 			{
@@ -155,6 +159,7 @@ public class LunchList extends TabActivity {
 
 			name.setText(null);
 			address.setText(null);
+			notes.setText(null);
 
 			getTabHost().setCurrentTab(0);
 		}
@@ -166,6 +171,7 @@ public class LunchList extends TabActivity {
 			
 			name.setText(r.getName());
 			address.setText(r.getAddress());
+			notes.setText(r.getNotes());
 			
 			if(r.getType().equals("sit_down")){
 				types.check(R.id.sit_down);

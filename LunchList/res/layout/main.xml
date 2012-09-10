@@ -78,7 +78,7 @@
                         android:scrollHorizontally="false"
                         android:maxLines="2"
                         android:maxWidth="200sp"
-                        android:hint="Enter in information"
+                        android:hint="Notes..."
 					/>
                 </TableRow>
                 
