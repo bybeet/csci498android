@@ -6,6 +6,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.*;
@@ -187,4 +188,18 @@ public class LunchList extends TabActivity {
 			getTabHost().setCurrentTab(1);
 		}
 	};
+	
+	//Taken from APT
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId()==R.id.toast) {
+			String message="No restaurant selected";
+			if (current!=null) {
+				message=current.getNotes();
+			}
+			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+			return(true);
+		}
+		return(super.onOptionsItemSelected(item));
+	}
 }
