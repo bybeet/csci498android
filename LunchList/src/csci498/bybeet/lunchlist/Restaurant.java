@@ -16,6 +16,17 @@ public class Restaurant {
 		this.name = name;
 	}
 	
+	public String getNotes ()
+	{
+		return notes;
+	}
+	
+	public void setNotes ( String notes )
+	{
+		this.notes = notes;
+	}
+	
+	
 	public String getAddress ()
 	{
 		return(address);
