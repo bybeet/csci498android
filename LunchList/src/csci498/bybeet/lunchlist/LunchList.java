@@ -86,6 +86,7 @@ public class LunchList extends TabActivity {
 	EditText address = null;
 	EditText notes = null;
 	RadioGroup types = null;
+	Restaurant current = null;
 			
 
 	@Override
@@ -136,26 +137,26 @@ public class LunchList extends TabActivity {
 			RadioGroup types = (RadioGroup)findViewById(R.id.types);
 			EditText notes = (EditText)findViewById(R.id.notes);
 
-			Restaurant restaurant = new Restaurant();
-			restaurant.setAddress(address.getText().toString());
-			restaurant.setName(name.getText().toString());
-			restaurant.setNotes(notes.getText().toString());
+			current = new Restaurant();
+			current.setAddress(address.getText().toString());
+			current.setName(name.getText().toString());
+			current.setNotes(notes.getText().toString());
 
 			switch(types.getCheckedRadioButtonId())
 			{
 			case R.id.sit_down:
-				restaurant.setType("sit_down");
+				current.setType("sit_down");
 				break;
 			case R.id.take_out:
-				restaurant.setType("take_out");
+				current.setType("take_out");
 				break;
 			case R.id.delivery:
-				restaurant.setType("delivery");
+				current.setType("delivery");
 				break;
 			}
 
 			adapterAddress.add(address.getText().toString());
-			adapter.add(restaurant);
+			adapter.add(current);
 
 			name.setText(null);
 			address.setText(null);
@@ -167,16 +168,16 @@ public class LunchList extends TabActivity {
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		public void onItemClick (AdapterView<?> parent, View view, int position, long id){
-			Restaurant r = restaurants.get(position);
+			current = restaurants.get(position);
 			
-			name.setText(r.getName());
-			address.setText(r.getAddress());
-			notes.setText(r.getNotes());
+			name.setText(current.getName());
+			address.setText(current.getAddress());
+			notes.setText(current.getNotes());
 			
-			if(r.getType().equals("sit_down")){
+			if(current.getType().equals("sit_down")){
 				types.check(R.id.sit_down);
 			}
-			else if(r.getType().equals("take_out")){
+			else if(current.getType().equals("take_out")){
 				types.check(R.id.take_out);
 			}
 			else{
