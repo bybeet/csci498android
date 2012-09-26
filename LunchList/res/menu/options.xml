@@ -3,4 +3,7 @@
         android:title="Raise Toast"
         android:orderInCategory="100"
         android:showAsAction="never" android:icon="@drawable/toast"/>
+    <item android:id="@+id/run"
+        android:title="Run long task"
+        android:icon="@drawable/run" />
 </menu>
