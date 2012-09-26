@@ -2,6 +2,7 @@ package csci498.bybeet.lunchlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -91,7 +92,8 @@ public class LunchList extends TabActivity {
 	RadioGroup types = null;
 	Restaurant current = null;
 		
-	int progress;
+	private int progress;
+	private AtomicBoolean isActive;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,7 @@ public class LunchList extends TabActivity {
 		address = (EditText)findViewById(R.id.addr);
 		notes = (EditText)findViewById(R.id.notes); 
 		types = (RadioGroup)findViewById(R.id.types);
+		isActive = new AtomicBoolean(true);
 
 		//Tab views, one for a list, one for entry
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
@@ -231,8 +234,8 @@ public class LunchList extends TabActivity {
 	
 	private Runnable longTask = new Runnable () {
 		public void run () {
-			for (int i = 0; i < 20; i++ ) {
-				doSomeLongWork(500);
+			for (int i = 0; i < 10000 && isActive.get(); i+=200 ) {
+				doSomeLongWork(200);
 			}
 			
 			runOnUiThread(new Runnable() {
@@ -242,4 +245,11 @@ public class LunchList extends TabActivity {
 			});
 		}
 	};
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		
+		isActive.set(false);
+	}
 }
