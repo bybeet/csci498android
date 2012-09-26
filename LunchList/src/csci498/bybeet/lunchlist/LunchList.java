@@ -211,9 +211,7 @@ public class LunchList extends TabActivity {
 			return(true);
 		}
 		else if ( item.getItemId() == R.id.run ){
-			setProgressBarVisibility(true);
-			progress = 0;
-			new Thread(longTask).start();
+			startWork();
 			
 			return true;
 		}
@@ -238,12 +236,15 @@ public class LunchList extends TabActivity {
 				doSomeLongWork(200);
 			}
 			
-			runOnUiThread(new Runnable() {
-				public void run () {
-					setProgressBarVisibility(false);
-				}
-			});
-		}
+			if(isActive.get()) {
+				runOnUiThread(new Runnable() {
+					public void run () {
+						setProgressBarVisibility(false);
+						progress = 0;
+					}
+				});
+			}
+		};
 	};
 	
 	@Override
@@ -251,5 +252,23 @@ public class LunchList extends TabActivity {
 		super.onPause();
 		
 		isActive.set(false);
+	}
+	
+	@Override
+	public void onResume () {
+		super.onResume();
+		
+		isActive.set(true);
+		
+		//Restart the thread if the thread was paused
+		//in the middle of it's progress
+		if(progress > 0) {
+			startWork();
+		}
+	}
+	
+	private void startWork () {
+		setProgressBarVisibility(true);
+		new Thread(longTask).start();
 	}
 }
