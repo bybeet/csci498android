@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.app.*;
 import android.widget.*;
 
@@ -88,11 +89,14 @@ public class LunchList extends TabActivity {
 	EditText notes = null;
 	RadioGroup types = null;
 	Restaurant current = null;
-			
+		
+	int progress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Status Bar
+		requestWindowFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
 
 		Button save = (Button)findViewById(R.id.save);
@@ -103,26 +107,28 @@ public class LunchList extends TabActivity {
 
 		adapter = new RestaurantAdapter();
 		list.setAdapter(adapter);
-		
-		list.setOnItemClickListener(onListClick);
 
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
-		//textView.setAdapter(adapterAddress);
 		
+		//Initialize EditText fields
 		name = (EditText)findViewById(R.id.name);
 		address = (EditText)findViewById(R.id.addr);
 		notes = (EditText)findViewById(R.id.notes); 
 		types = (RadioGroup)findViewById(R.id.types);
 
+		//Tab views, one for a list, one for entry
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
 		spec.setContent(R.id.restaurants); 
 		spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
 		getTabHost().addTab(spec);
+		
 		spec=getTabHost().newTabSpec("tag2");
 		spec.setContent(R.id.details);
 		spec.setIndicator("Details", getResources().getDrawable(R.drawable.restaurant));
 		getTabHost().addTab(spec);
 		getTabHost().setCurrentTab(0);
+
+		list.setOnItemClickListener(onListClick);
 	}
 
 	@Override
