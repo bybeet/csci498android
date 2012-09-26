@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -208,4 +209,16 @@ public class LunchList extends TabActivity {
 		}
 		return(super.onOptionsItemSelected(item));
 	}
+	
+	private void doSomeLongWork (){
+		SystemClock.sleep(250);
+	}
+	
+	private Runnable longTask = new Runnable () {
+		public void run () {
+			for (int i = 0; i < 20; i++ ) {
+				doSomeLongWork();
+			}
+		}
+	};
 }
