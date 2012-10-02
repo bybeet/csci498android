@@ -14,9 +14,13 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	}
 	
 	@Override
-	public void onCreate (SQLiteDatabase db) {}
+	public void onCreate (SQLiteDatabase db) {
+		db.execSQL("CREATE TABLE restaurants (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT);");
+	}
 	
 	@Override
-	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {}
+	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
+		//Not currently needed, not called until 2nd db schema
+	}
 	
 }
