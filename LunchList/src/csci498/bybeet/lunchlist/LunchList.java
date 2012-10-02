@@ -142,26 +142,24 @@ public class LunchList extends TabActivity {
 			RadioGroup types = (RadioGroup)findViewById(R.id.types);
 			EditText notes = (EditText)findViewById(R.id.notes);
 
-			current = new Restaurant();
-			current.setAddress(address.getText().toString());
-			current.setName(name.getText().toString());
-			current.setNotes(notes.getText().toString());
-
+			String type = new String();
+			
 			switch(types.getCheckedRadioButtonId())
 			{
 			case R.id.sit_down:
-				current.setType("sit_down");
+				type = "sit_down";
 				break;
 			case R.id.take_out:
-				current.setType("take_out");
+				type = "take_out";
 				break;
 			case R.id.delivery:
-				current.setType("delivery");
+				type = "delivery";
 				break;
 			}
 			
-			helper.insert(name.getText().toString(), address.getText().toString(), types.toString(), notes.getText().toString());
-
+			helper.insert(name.getText().toString(), address.getText().toString(), type , notes.getText().toString());
+			restaurants.requery();
+			
 			name.setText(null);
 			address.setText(null);
 			notes.setText(null);
