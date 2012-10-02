@@ -91,15 +91,10 @@ public class LunchList extends TabActivity {
 	EditText notes = null;
 	RadioGroup types = null;
 	Restaurant current = null;
-		
-	private int progress;
-	private AtomicBoolean isActive;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Status Bar
-		requestWindowFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
 
 		Button save = (Button)findViewById(R.id.save);
@@ -118,7 +113,6 @@ public class LunchList extends TabActivity {
 		address = (EditText)findViewById(R.id.addr);
 		notes = (EditText)findViewById(R.id.notes); 
 		types = (RadioGroup)findViewById(R.id.types);
-		isActive = new AtomicBoolean(true);
 
 		//Tab views, one for a list, one for entry
 		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
@@ -209,65 +203,8 @@ public class LunchList extends TabActivity {
 			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 			return(true);
 		}
-		else if ( item.getItemId() == R.id.run ){
-			startWork();
-			
-			return true;
-		}
 		
 		return(super.onOptionsItemSelected(item));
 	}
 	
-	private void doSomeLongWork (final int increment){
-		runOnUiThread ( new Runnable (){
-			public void run() {
-				progress += increment;
-				setProgress(progress);
-			}
-		});
-		
-		SystemClock.sleep(250);
-	}
-	
-	private Runnable longTask = new Runnable () {
-		public void run () {
-			for (int i = 0; i < 10000 && isActive.get(); i+=200 ) {
-				doSomeLongWork(200);
-			}
-			
-			if(isActive.get()) {
-				runOnUiThread(new Runnable() {
-					public void run () {
-						setProgressBarVisibility(false);
-						progress = 0;
-					}
-				});
-			}
-		};
-	};
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		
-		isActive.set(false);
-	}
-	
-	@Override
-	public void onResume () {
-		super.onResume();
-		
-		isActive.set(true);
-		
-		//Restart the thread if the thread was paused
-		//in the middle of it's progress
-		if(progress > 0) {
-			startWork();
-		}
-	}
-	
-	private void startWork () {
-		setProgressBarVisibility(true);
-		new Thread(longTask).start();
-	}
 }
