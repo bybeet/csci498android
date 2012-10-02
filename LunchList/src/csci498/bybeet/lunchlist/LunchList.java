@@ -199,7 +199,6 @@ public class LunchList extends TabActivity {
 		}
 	};
 	
-	//Taken from APT
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId()==R.id.toast) {
