@@ -1,7 +1,6 @@
 package csci498.bybeet.lunchlist;
 
-import android.content.Context;
-import android.database.*;
+import android.content.*;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,6 +20,16 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
 		//Not currently needed, not called until 2nd db schema
+	}
+	
+	public void insert (String name, String address, String type, String notes) {
+		ContentValues cv = new ContentValues();
+		cv.put("name", name);
+		cv.put("address", address);
+		cv.put("type", type);
+		cv.put("notes", notes);
+		
+		getWritableDatabase().insert("restaurants", "name", cv);
 	}
 	
 }
