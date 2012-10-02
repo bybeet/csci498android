@@ -85,6 +85,7 @@ public class LunchList extends TabActivity {
 	RestaurantAdapter adapter = null;
 	ArrayAdapter<String> adapterAddress = null;
 	List<String> addresses = new ArrayList<String> ();
+	RestaurantHelper helper;
 	
 	EditText name = null;
 	EditText address = null;
@@ -96,6 +97,7 @@ public class LunchList extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		helper = new RestaurantHelper(this);
 
 		Button save = (Button)findViewById(R.id.save);
 		save.setOnClickListener(onSave);
@@ -207,4 +209,9 @@ public class LunchList extends TabActivity {
 		return(super.onOptionsItemSelected(item));
 	}
 	
+	@Override
+	public void onDestroy () {
+		super.onDestroy();
+		helper.close();
+	}
 }
