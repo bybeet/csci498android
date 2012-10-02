@@ -92,6 +92,7 @@ public class LunchList extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
 		//Initialize "restaurants" to all the cursor information in the db
 		helper = new RestaurantHelper(this);
 		restaurants = helper.getAll();
