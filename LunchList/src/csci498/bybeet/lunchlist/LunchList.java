@@ -161,9 +161,8 @@ public class LunchList extends TabActivity {
 				current.setType("delivery");
 				break;
 			}
-
-			adapterAddress.add(address.getText().toString());
-			adapter.add(current);
+			
+			helper.insert(name.getText().toString(), address.getText().toString(), types.toString(), notes.getText().toString());
 
 			name.setText(null);
 			address.setText(null);
