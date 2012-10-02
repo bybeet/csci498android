@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.app.*;
+import android.content.Context;
+import android.database.Cursor;
 import android.widget.*;
 
 @SuppressWarnings("deprecation")
@@ -53,34 +55,26 @@ public class LunchList extends TabActivity {
 
 	}
 
-	class RestaurantAdapter extends ArrayAdapter<Restaurant>{
-		RestaurantAdapter(){
-			super(LunchList.this, android.R.layout.simple_list_item_1, restaurants);
+	class RestaurantAdapter extends CursorAdapter{
+		RestaurantAdapter(Cursor c){
+			super(LunchList.this, c);
 		}
 
-		public View getView(int position, View convertView, ViewGroup parent)
-		{
-			View row = convertView;
-			RestaurantHolder holder = null;
-
-			if( row == null )
-			{
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.row, null);
-
-				holder = new RestaurantHolder(row);
-				row.setTag(holder);
-			}
-			else
-			{
-				holder = (RestaurantHolder)row.getTag();
-			}
-
-			holder.populateFrom(restaurants.get(position));
-			return(row);
+		@Override
+		public void bindView (View row, Context ctxt, Cursor c) {
+			RestaurantHolder holder = (RestaurantHolder)row.getTag();
+			holder.populateFrom(c, helper);
+		}
+		
+		@Override
+		public View newView (Context ctxt, Cursor c, ViewGroup parent) {
+			LayoutInflater inflater = getLayoutInflater();
+			View row = inflater.inflate(R.layout.row, parent, false);
+			RestaurantHolder holder = new RestaurantHolder(row);
+			row.setTag(holder);
+			return row;
 		}
 	}
-
 	List<Restaurant> restaurants = new ArrayList<Restaurant> ();
 	RestaurantAdapter adapter = null;
 	ArrayAdapter<String> adapterAddress = null;
