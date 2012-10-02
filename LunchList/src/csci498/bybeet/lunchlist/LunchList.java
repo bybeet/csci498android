@@ -33,16 +33,16 @@ public class LunchList extends TabActivity {
 			icon = (ImageView)row.findViewById(R.id.icon);
 		}
 
-		void populateFrom (Restaurant r)
+		void populateFrom (Cursor c, RestaurantHelper helper)
 		{
-			name.setText(r.getName());
-			address.setText(r.getAddress());
+			name.setText(helper.getName(c));
+			address.setText(helper.getAddress(c));
 
-			if (r.getType().equals("sit_down")) 
+			if (helper.getType(c).equals("sit_down")) 
 			{ 
 				icon.setImageResource(R.drawable.ball_red);
 			}
-			else if (r.getType().equals("take_out")) 
+			else if (helper.getType(c).equals("take_out")) 
 			{
 				icon.setImageResource(R.drawable.ball_yellow);
 			}
@@ -75,7 +75,8 @@ public class LunchList extends TabActivity {
 			return row;
 		}
 	}
-	List<Restaurant> restaurants = new ArrayList<Restaurant> ();
+	 
+	Cursor restaurants = null;
 	RestaurantAdapter adapter = null;
 	ArrayAdapter<String> adapterAddress = null;
 	List<String> addresses = new ArrayList<String> ();
@@ -91,15 +92,18 @@ public class LunchList extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		//Initialize "restaurants" to all the cursor information in the db
 		helper = new RestaurantHelper(this);
-
+		restaurants = helper.getAll();
+		startManagingCursor(restaurants);
+		
 		Button save = (Button)findViewById(R.id.save);
 		save.setOnClickListener(onSave);
 
 		ListView list = (ListView)findViewById(R.id.restaurants);
 		//AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.addr);
 
-		adapter = new RestaurantAdapter();
+		adapter = new RestaurantAdapter(restaurants);
 		list.setAdapter(adapter);
 
 		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
