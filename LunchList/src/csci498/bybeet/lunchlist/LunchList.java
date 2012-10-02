@@ -171,22 +171,9 @@ public class LunchList extends TabActivity {
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		public void onItemClick (AdapterView<?> parent, View view, int position, long id){
-			restaurants.moveToPosition(position);
-			name.setText(helper.getName(restaurants));
-			address.setText(helper.getAddress(restaurants));
-			notes.setText(helper.getNotes(restaurants));
+			Intent i = new Intent(LunchList.this, DetailForm.class);
 			
-			if(helper.getType(restaurants).equals("sit_down")){
-				types.check(R.id.sit_down);
-			}
-			else if(helper.getType(restaurants).equals("take_out")){
-				types.check(R.id.take_out);
-			}
-			else{
-				types.check(R.id.delivery);
-			}
-			
-			getTabHost().setCurrentTab(1);
+			startActivity(i);
 		}
 	};
 	
