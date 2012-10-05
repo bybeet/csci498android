@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,7 @@ public class LunchList extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.options, menu);
+		new MenuInflater(this).inflate(R.menu.options, menu);
 		return (super.onCreateOptionsMenu(menu));
 	}
 
@@ -132,13 +133,9 @@ public class LunchList extends ListActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId()==R.id.toast) {
-			String message="No restaurant selected";
-			if (current!=null) {
-				message=current.getNotes();
-			}
-			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-			return(true);
+		if (item.getItemId() == R.id.add) {
+			startActivity(new Intent(LunchList.this, DetailForm.class));
+			return true;
 		}
 		
 		return(super.onOptionsItemSelected(item));
