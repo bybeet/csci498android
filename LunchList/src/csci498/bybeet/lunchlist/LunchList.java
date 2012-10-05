@@ -2,25 +2,58 @@ package csci498.bybeet.lunchlist;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.app.*;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CursorAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressWarnings("deprecation")
-public class LunchList extends TabActivity {
+public class LunchList extends ListActivity {
 
+	Cursor restaurants = null;
+	RestaurantAdapter adapter = null;
+	ArrayAdapter<String> adapterAddress = null;
+	List<String> addresses = new ArrayList<String> ();
+	RestaurantHelper helper;
+	
+	EditText name = null;
+	EditText address = null;
+	EditText notes = null;
+	RadioGroup types = null;
+	Restaurant current = null;
+	
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		
+		//Initialize "restaurants" to all the cursor information in the db
+		helper = new RestaurantHelper(this);
+		restaurants = helper.getAll();
+		startManagingCursor(restaurants);
+		
+		adapter = new RestaurantAdapter(restaurants);
+		setListAdapter(adapter);
+	}
+	
 	static class RestaurantHolder
 	{
 		private TextView name = null;
@@ -76,99 +109,12 @@ public class LunchList extends TabActivity {
 			return row;
 		}
 	}
-	 
-	Cursor restaurants = null;
-	RestaurantAdapter adapter = null;
-	ArrayAdapter<String> adapterAddress = null;
-	List<String> addresses = new ArrayList<String> ();
-	RestaurantHelper helper;
-	
-	EditText name = null;
-	EditText address = null;
-	EditText notes = null;
-	RadioGroup types = null;
-	Restaurant current = null;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		
-		//Initialize "restaurants" to all the cursor information in the db
-		helper = new RestaurantHelper(this);
-		restaurants = helper.getAll();
-		startManagingCursor(restaurants);
-		
-		Button save = (Button)findViewById(R.id.save);
-		save.setOnClickListener(onSave);
-
-		ListView list = (ListView)findViewById(R.id.restaurants);
-		//AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.addr);
-
-		adapter = new RestaurantAdapter(restaurants);
-		list.setAdapter(adapter);
-
-		adapterAddress = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, addresses);
-		
-		//Initialize EditText fields
-		name = (EditText)findViewById(R.id.name);
-		address = (EditText)findViewById(R.id.addr);
-		notes = (EditText)findViewById(R.id.notes); 
-		types = (RadioGroup)findViewById(R.id.types);
-
-		//Tab views, one for a list, one for entry
-		TabHost.TabSpec spec=getTabHost().newTabSpec("tag1");
-		spec.setContent(R.id.restaurants); 
-		spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
-		getTabHost().addTab(spec);
-		
-		spec=getTabHost().newTabSpec("tag2");
-		spec.setContent(R.id.details);
-		spec.setIndicator("Details", getResources().getDrawable(R.drawable.restaurant));
-		getTabHost().addTab(spec);
-		getTabHost().setCurrentTab(0);
-
-		list.setOnItemClickListener(onListClick);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.options, menu);
 		return (super.onCreateOptionsMenu(menu));
 	}
-
-	private View.OnClickListener onSave = new View.OnClickListener() {
-		public void onClick(View v) {
-			EditText name = (EditText)findViewById(R.id.name);
-			EditText address = (EditText)findViewById(R.id.addr);
-			RadioGroup types = (RadioGroup)findViewById(R.id.types);
-			EditText notes = (EditText)findViewById(R.id.notes);
-
-			String type = new String();
-			
-			switch(types.getCheckedRadioButtonId())
-			{
-			case R.id.sit_down:
-				type = "sit_down";
-				break;
-			case R.id.take_out:
-				type = "take_out";
-				break;
-			case R.id.delivery:
-				type = "delivery";
-				break;
-			}
-			
-			helper.insert(name.getText().toString(), address.getText().toString(), type , notes.getText().toString());
-			restaurants.requery();
-			
-			name.setText(null);
-			address.setText(null);
-			notes.setText(null);
-
-			getTabHost().setCurrentTab(0);
-		}
-	};
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		public void onItemClick (AdapterView<?> parent, View view, int position, long id){
