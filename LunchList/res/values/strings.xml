@@ -8,5 +8,6 @@
     <string name="sort_dialog_title">Choose a sort order</string>
     <string name="sort_title">Sort Order</string>
     <string name="sort_description">Choose the order the list uses</string>
+    <string name="feed_name">RSS Feed</string>
 
 </resources>
