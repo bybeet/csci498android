@@ -16,7 +16,7 @@ public class DetailForm extends Activity {
 	EditText notes;
 	RadioGroup types;
 	RestaurantHelper helper;
-	String restaurantId;
+	String restaurantId = null;
 
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class DetailForm extends Activity {
 
 	private View.OnClickListener onSave = new View.OnClickListener() { 
 		public void onClick(View v) {
-			String type;
+			String type = null;
 			switch (types.getCheckedRadioButtonId()) { 
 			case R.id.sit_down:
 				type = "sit_down";
@@ -60,12 +60,21 @@ public class DetailForm extends Activity {
 				type = "delivery";
 				break;
 			}
+			
+			if(restaurantId == null) {
+				helper.insert(name.getText().toString(), address.getText().toString(), type, notes.getText().toString());
+			}
+			else {
+				helper.update(restaurantId, name.getText().toString(), address.getText().toString(), type, notes.getText().toString());
+			}
+			
+			finish();
 		}
 	};
 
 	private void load() {
+		System.out.println(restaurantId);
 		Cursor c = helper.getById(restaurantId);
-
 		c.moveToFirst();
 		name.setText(helper.getName(c));
 		address.setText(helper.getAddress(c));
