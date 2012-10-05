@@ -37,13 +37,22 @@ public class LunchList extends ListActivity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 		helper = new RestaurantHelper(this);
+		initList();
+
+	}
+
+	private void initList() {
+		if(restaurants != null) {
+			stopManagingCursor(restaurants);
+			restaurants.close();
+		}
+		
 		restaurants = helper.getAll(prefs.getString("sort_order", "name"));
 		startManagingCursor(restaurants);
 
 		adapter = new RestaurantAdapter(restaurants);
 		setListAdapter(adapter);
 	}
-
 
 	@Override
 	public void onDestroy () {
@@ -133,7 +142,7 @@ public class LunchList extends ListActivity {
 	private SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			if (key.equals("sort_order")){
-				
+				initList();
 			}
 		}
 	};
