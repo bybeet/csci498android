@@ -3,8 +3,10 @@ package csci498.bybeet.lunchlist;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +23,10 @@ public class LunchList extends ListActivity {
 
 	public final static String ID_EXTRA = "apt.tutorial._ID";
 
-	Cursor restaurants = null;
-	RestaurantAdapter adapter = null;
-	RestaurantHelper helper;
+	private Cursor restaurants = null;
+	private RestaurantAdapter adapter = null;
+	private RestaurantHelper helper;
+	private SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,9 @@ public class LunchList extends ListActivity {
 		setContentView(R.layout.main);
 
 		//Initialize "restaurants" to all the cursor information in the db
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		helper = new RestaurantHelper(this);
-		restaurants = helper.getAll();
+		restaurants = helper.getAll(prefs.getString("sort_order", "name"));
 		startManagingCursor(restaurants);
 
 		adapter = new RestaurantAdapter(restaurants);
