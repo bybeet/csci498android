@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +26,8 @@ import android.widget.Toast;
 @SuppressWarnings("deprecation")
 public class LunchList extends ListActivity {
 
+	public final static String ID_EXTRA = "apt.tutorial._ID";
+	
 	Cursor restaurants = null;
 	RestaurantAdapter adapter = null;
 	ArrayAdapter<String> adapterAddress = null;
@@ -85,8 +86,6 @@ public class LunchList extends ListActivity {
 				icon.setImageResource(R.drawable.ball_green);
 			}
 		}
-
-
 	}
 
 	class RestaurantAdapter extends CursorAdapter{
@@ -123,6 +122,13 @@ public class LunchList extends ListActivity {
 			startActivity(i);
 		}
 	};
+	
+	@Override
+	public void onListItemClick(ListView list, View view, int position, long id) {
+		Intent intent = new Intent(LunchList.this, DetailForm.class);
+		intent.putExtra(ID_EXTRA, String.valueOf(id));
+		startActivity(intent);
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
