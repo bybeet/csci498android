@@ -35,6 +35,7 @@ public class LunchList extends ListActivity {
 
 		//Initialize "restaurants" to all the cursor information in the db
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(prefListener);
 		helper = new RestaurantHelper(this);
 		restaurants = helper.getAll(prefs.getString("sort_order", "name"));
 		startManagingCursor(restaurants);
@@ -42,6 +43,7 @@ public class LunchList extends ListActivity {
 		adapter = new RestaurantAdapter(restaurants);
 		setListAdapter(adapter);
 	}
+
 
 	@Override
 	public void onDestroy () {
@@ -127,4 +129,12 @@ public class LunchList extends ListActivity {
 			}
 		}
 	}
+	
+	private SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			if (key.equals("sort_order")){
+				
+			}
+		}
+	};
 }
