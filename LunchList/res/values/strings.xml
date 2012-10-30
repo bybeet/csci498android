@@ -10,5 +10,7 @@
     <string name="sort_description">Choose the order the list uses</string>
     <string name="feed_name">RSS Feed</string>
     <string name="no_internet">Sorry, the internet is not available</string>
+    <string name="location">Location:</string>
+    <string name="not_set">(not set)</string>
 
 </resources>

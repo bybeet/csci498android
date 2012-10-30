@@ -42,6 +42,10 @@
                     android:text="Delivery" />
             </RadioGroup>
         </TableRow>
+        <TableRow>
+            <TextView android:text="@string/location" />
+            <TextView android:id="@+id/location" android:text="@string/not_set" />
+        </TableRow>
 
         <EditText
             android:id="@+id/notes"
