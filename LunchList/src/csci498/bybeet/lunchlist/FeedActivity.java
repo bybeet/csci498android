@@ -10,6 +10,7 @@ import org.mcsoxford.rss.RSSReader;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,57 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class FeedActivity extends ListActivity {
+	
+	private InstanceState state;
+	
+	public static final String FEED_URL = "apt.tutorial.FEED_URL";
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		state = (InstanceState)getLastNonConfigurationInstance();
+		
+		if(state == null) {
+			state = new InstanceState();
+			state.task = new FeedTask(this);
+			state.task.execute(getIntent().getStringExtra(FEED_URL));
+		}
+		else {
+			if(state.task != null) {
+				state.task.attach(this);
+			}
+			
+			if(state.feed != null) {
+				setFeed(state.feed);
+			}
+		}
+	}
+	
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		if(state.task != null) {
+			state.task.detach();
+		}
+		
+		return state;
+	}
+	
+	private void setFeed(RSSFeed feed) {
+		state.feed = feed;
+		setListAdapter(new FeedAdapter(feed));
+	}
+
+	private void goBlooey(Throwable t) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Exception!").setMessage(t.toString()).setPositiveButton("OK", null).show();
+	}
+	
+	private static class InstanceState {
+		RSSFeed feed = null;
+		FeedTask task = null;
+	}
 
 	private static class FeedTask extends AsyncTask<String, Void, RSSFeed> {
 		private RSSReader reader = new RSSReader();
@@ -60,11 +112,6 @@ public class FeedActivity extends ListActivity {
 			}
 		}
 
-		private void goBlooey(Throwable t) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-			builder.setTitle("Exception!").setMessage(t.toString()).setPositiveButton("OK", null).show();
-		}
 	}
 	private class FeedAdapter extends BaseAdapter {
 		RSSFeed feed = null;
