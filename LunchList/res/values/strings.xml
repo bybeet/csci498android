@@ -12,5 +12,6 @@
     <string name="no_internet">Sorry, the internet is not available</string>
     <string name="location">Location:</string>
     <string name="not_set">(not set)</string>
+    <string name="save_location">Save Location</string>
 
 </resources>
