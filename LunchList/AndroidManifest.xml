@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".RestaurantMap" >
         </activity>
+        <activity android:name=".TimePreference" >
+        </activity>
 
         <service android:name=".FeedService" >
         </service>
