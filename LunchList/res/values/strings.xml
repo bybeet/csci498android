@@ -14,5 +14,6 @@
     <string name="not_set">(not set)</string>
     <string name="save_location">Save Location</string>
     <string name="location_saved">Location saved.</string>
+    <string name="show_map">Show on Map</string>
 
 </resources>
