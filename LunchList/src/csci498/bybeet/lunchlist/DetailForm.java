@@ -28,12 +28,18 @@ public class DetailForm extends Activity {
 	RestaurantHelper helper;
 	String restaurantId;
 	LocationManager locMgr;
+	
+	double latitudeCache;
+	double longitudeCache;
 
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
 
+		latitudeCache = 0.0d;
+		longitudeCache = 0.0d;
+		
 		helper = new RestaurantHelper(this);
 		name = (EditText)findViewById(R.id.name); 
 		address = (EditText)findViewById(R.id.addr); 
@@ -121,6 +127,9 @@ public class DetailForm extends Activity {
 		}
 		else if(item.getItemId() == R.id.map) {
 			Intent intent = new Intent(this, RestaurantMap.class);
+			intent.putExtra(RestaurantMap.EXTRA_LATITUDE, latitudeCache);
+			intent.putExtra(RestaurantMap.EXTRA_LONGITUDE, longitudeCache);
+			intent.putExtra(RestaurantMap.EXTRA_NAME, name.getText().toString());
 			startActivity(intent);
 			return true;
 		}
@@ -199,7 +208,9 @@ public class DetailForm extends Activity {
 		}
 
 		location.setText(String.valueOf(helper.getLatitude(c)) + ", " + String.valueOf(helper.getLongitude(c)));
-
+		latitudeCache = helper.getLatitude(c);
+		longitudeCache = helper.getLatitude(c);
+		
 		c.close();
 	}
 }
