@@ -17,5 +17,9 @@
     <string name="show_map">Show on Map</string>
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
+    <string name="sound_alarm">Sound a Lunch Alarm</string>
+    <string name="sound_alarm_summary">Check if you want to know when it is time for lunch</string>
+    <string name="alarm_time">Lunch Alarm Time</string>
+    <string name="alarm_time_summary">Set your desired time for the lunch alarm</string>
 
 </resources>

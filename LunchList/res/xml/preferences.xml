@@ -7,5 +7,15 @@
         android:key="sort_order"
         android:summary="@string/sort_description"
         android:title="@string/sort_title" />
+    <CheckBoxPreference 
+        android:key="alarm"
+        android:title="@string/sound_alarm"
+        android:summary="@string/sound_alarm_summary" />
+    <csci498.bybeet.lunchlist.TimePreference
+        android:key="alarm_time"
+        android:title="@string/alarm_time"
+        android:defaultValue="12:00"
+        android:summary="@string/alarm_time_summary"
+        android:dependency="alarm" />
 
 </PreferenceScreen>
