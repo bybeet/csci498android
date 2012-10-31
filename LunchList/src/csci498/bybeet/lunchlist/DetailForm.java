@@ -91,6 +91,15 @@ public class DetailForm extends Activity {
 		new MenuInflater(this).inflate(R.menu.details_option, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if(restaurantId == null) {
+			menu.findItem(R.id.location).setEnabled(false);
+		}
+		
+		return super.onPrepareOptionsMenu(menu);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,7 +127,7 @@ public class DetailForm extends Activity {
 			helper.updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
 			location.setText(String.valueOf(fix.getLatitude()) + ", " + String.valueOf(fix.getLongitude()));
 			locMgr.removeUpdates(onLocationChange);
-			Toast.makeText(DetailForm.this, "@string/location_saved", Toast.LENGTH_LONG).show();
+			Toast.makeText(DetailForm.this, R.string.location_saved, Toast.LENGTH_LONG).show();
 		}
 		
 		public void onProviderDisabled(String provider) {
