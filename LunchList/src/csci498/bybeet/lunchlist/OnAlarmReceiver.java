@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class OnAlarmReceiver extends BroadcastReceiver {
 
@@ -17,8 +18,11 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean useNotification = prefs.getBoolean("use_notification", true);
+		
+		Log.d("OnAlarmReceiver", "onReceive alarm event");
 
 		if(useNotification) {
+			Log.d("OnAlarmReceiver", "Use notification logic.");
 			NotificationManager mgr = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 			Notification note = new Notification(R.drawable.ic_menu_compass, context.getString(R.string.alarm_text), System.currentTimeMillis());
 			PendingIntent i = PendingIntent.getActivity(context, 0, new Intent(context, AlarmActivity.class), 0);

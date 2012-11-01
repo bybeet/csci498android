@@ -56,7 +56,7 @@ public class EditPreference extends PreferenceActivity {
 			}
 			else if("alarm_time".equals(key)) {
 				OnBootReceiver.cancelAlarm(EditPreference.this);
-				OnBootReceiver.cancelAlarm(EditPreference.this);
+				OnBootReceiver.setAlarm(EditPreference.this);
 			}
 
 		}

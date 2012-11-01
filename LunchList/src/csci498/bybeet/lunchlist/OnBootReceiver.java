@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class OnBootReceiver extends BroadcastReceiver {
 
@@ -31,6 +32,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 		if(cal.getTimeInMillis() < System.currentTimeMillis()) {
 			cal.add(Calendar.DAY_OF_YEAR, 1);
 		}
+		
+		Log.e("OnBootReceive", "Alarm set and sent to AlarmManager.");
 		
 		manager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, getPendingIntent(context));
 		
