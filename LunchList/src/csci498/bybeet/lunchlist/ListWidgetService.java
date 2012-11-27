@@ -1,15 +1,16 @@
 package csci498.bybeet.lunchlist;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
-import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 
 
 public class ListWidgetService extends RemoteViewsService {
 	
+	@SuppressLint("NewApi")
 	@Override
 	public RemoteViewsFactory onGetViewFactory(Intent intent){
-		return (new ListViewFactory(this.getApplicationContext(), intent));
+		return (new ListViewsFactory(this.getApplicationContext(), intent));
 	}
 }
