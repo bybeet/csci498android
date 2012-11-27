@@ -29,6 +29,7 @@ public class DetailFragment extends Fragment {
 	EditText address;
 	EditText notes;
 	EditText feed;
+	EditText phone;
 	TextView location;
 	RadioGroup types;
 	RestaurantHelper helper;
@@ -71,6 +72,7 @@ public class DetailFragment extends Fragment {
 		notes = (EditText)getView().findViewById(R.id.notes); 
 		feed = (EditText)getView().findViewById(R.id.feed);
 		types = (RadioGroup)getView().findViewById(R.id.types);
+		phone = (EditText)getView().findViewById(R.id.phone);
 		location = (TextView)getView().findViewById(R.id.location);
 		
 		Bundle args = getArguments();
@@ -194,10 +196,10 @@ public class DetailFragment extends Fragment {
 			}
 
 			if(restaurantId == null) {
-				getHelper().insert(name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
+				getHelper().insert(name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString(), phone.getText().toString());
 			}
 			else {
-				getHelper().update(restaurantId, name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
+				getHelper().update(restaurantId, name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString(), phone.getText().toString());
 			}
 		}
 	}
