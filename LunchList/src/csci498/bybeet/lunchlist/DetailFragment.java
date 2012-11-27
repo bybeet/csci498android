@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class DetailFragment extends Fragment {
 
 	private static final String ARG_REST_ID = "apt.tutorial.ARG_REST_ID";
-	
+
 	EditText name;
 	EditText address;
 	EditText notes;
@@ -36,38 +36,38 @@ public class DetailFragment extends Fragment {
 	RestaurantHelper helper;
 	String restaurantId;
 	LocationManager locMgr;
-	
+
 	double latitudeCache;
 	double longitudeCache;
 
 	public static DetailFragment newInstance(long id){
 		DetailFragment result = new DetailFragment();
 		Bundle args = new Bundle();
-		
+
 		args.putString(ARG_REST_ID, String.valueOf(id));
 		result.setArguments(args);
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		return inflater.inflate(R.layout.detail_form, container, false); 
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		
+
 		locMgr = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-		
+
 		name = (EditText)getView().findViewById(R.id.name); 
 		address = (EditText)getView().findViewById(R.id.addr); 
 		notes = (EditText)getView().findViewById(R.id.notes); 
@@ -75,9 +75,9 @@ public class DetailFragment extends Fragment {
 		types = (RadioGroup)getView().findViewById(R.id.types);
 		phone = (EditText)getView().findViewById(R.id.phone);
 		location = (TextView)getView().findViewById(R.id.location);
-		
+
 		Bundle args = getArguments();
-		
+
 		if(args != null){
 			loadRestaurant(args.getString(ARG_REST_ID));
 		}
@@ -95,7 +95,7 @@ public class DetailFragment extends Fragment {
 		save();
 		getHelper().close();
 		locMgr.removeUpdates(onLocationChange);
-		
+
 		super.onPause();
 	}
 
@@ -113,14 +113,14 @@ public class DetailFragment extends Fragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.details_option, menu);
 	}
-	
+
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		if(restaurantId == null) {
 			menu.findItem(R.id.location).setEnabled(false);
 			menu.findItem(R.id.map).setEnabled(false);
 		}
-		
+
 		if(isTelephonyAvailable()){
 			menu.findItem(R.id.call).setEnabled(true);
 		}
@@ -156,7 +156,7 @@ public class DetailFragment extends Fragment {
 		}
 		else if(item.getItemId() == R.id.call){
 			String toDial = "tel:" + phone.getText().toString();
-			
+
 			if(toDial.length() > 4){
 				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(toDial)));
 			}
@@ -164,7 +164,7 @@ public class DetailFragment extends Fragment {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	private LocationListener onLocationChange = new LocationListener() {
 		public void onLocationChanged(Location fix) {
 			getHelper().updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
@@ -172,15 +172,15 @@ public class DetailFragment extends Fragment {
 			locMgr.removeUpdates(onLocationChange);
 			Toast.makeText(getActivity(), R.string.location_saved, Toast.LENGTH_LONG).show();
 		}
-		
+
 		public void onProviderDisabled(String provider) {
 			//Required for interface, not used
 		}
-		
+
 		public void onProviderEnabled(String provider) {
 			//Required for interface, not used
 		}
-		
+
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			//Required for interface, not used
 		}
@@ -238,18 +238,18 @@ public class DetailFragment extends Fragment {
 		location.setText(String.valueOf(getHelper().getLatitude(c)) + ", " + String.valueOf(getHelper().getLongitude(c)));
 		latitudeCache = getHelper().getLatitude(c);
 		longitudeCache = getHelper().getLatitude(c);
-		
+
 		c.close();
 	}
-	
+
 	public void loadRestaurant(String restaurantId){ 
 		this.restaurantId=restaurantId;
-		
+
 		if(restaurantId!=null){
 			load();
 		}
 	}
-	
+
 	private boolean isTelephonyAvailable(){
 		return getActivity().getPackageManager().hasSystemFeature("android.hardware.telephony");
 	}
