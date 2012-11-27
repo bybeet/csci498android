@@ -23,10 +23,11 @@ public class LunchFragment extends ListFragment {
 
 	public final static String ID_EXTRA = "apt.tutorial._ID";
 
-	private Cursor restaurants = null;
-	private RestaurantAdapter adapter = null;
+	private Cursor restaurants;
+	private RestaurantAdapter adapter;
 	private RestaurantHelper helper;
 	private SharedPreferences prefs;
+	private OnRestaurantListener listener;
 
 	@Override
 	public void onCreate(Bundle state){
@@ -63,9 +64,9 @@ public class LunchFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent intent = new Intent(getActivity(), DetailForm.class);
-		intent.putExtra(ID_EXTRA, String.valueOf(id));
-		startActivity(intent);
+		if(listener != null){
+			listener.onRestaurantSelected(id);
+		}
 	}
 
 	@Override
@@ -85,6 +86,14 @@ public class LunchFragment extends ListFragment {
 		}
 
 		return(super.onOptionsItemSelected(item));
+	}
+	
+	public interface OnRestaurantListener {
+		void onRestaurantSelected(long id);
+	}
+	
+	public void setOnRestaurantListener(OnRestaurantListener listener){
+		this.listener = listener;
 	}
 
 	class RestaurantAdapter extends CursorAdapter{
