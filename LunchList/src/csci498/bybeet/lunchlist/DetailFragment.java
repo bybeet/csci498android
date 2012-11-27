@@ -1,6 +1,6 @@
 package csci498.bybeet.lunchlist;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
@@ -9,15 +9,19 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DetailFragment extends Activity {
+public class DetailFragment extends Fragment {
 
 	EditText name;
 	EditText address;
@@ -35,24 +39,37 @@ public class DetailFragment extends Activity {
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_form);
 
-		latitudeCache = 0.0d;
-		longitudeCache = 0.0d;
+		setHasOptionsMenu(true);
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		return inflater.inflate(R.layout.detail_form, container, false); 
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 		
-		helper = new RestaurantHelper(this);
-		name = (EditText)findViewById(R.id.name); 
-		address = (EditText)findViewById(R.id.addr); 
-		notes = (EditText)findViewById(R.id.notes); 
-		feed = (EditText)findViewById(R.id.feed);
-		types = (RadioGroup)findViewById(R.id.types);
-		location = (TextView)findViewById(R.id.location);
-
-		locMgr = (LocationManager)getSystemService(LOCATION_SERVICE);
-
-		restaurantId = getIntent().getStringExtra(LunchList.ID_EXTRA);
-
-		if(restaurantId != null) {
+		locMgr = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+		
+		name = (EditText)getView().findViewById(R.id.name); 
+		address = (EditText)getView().findViewById(R.id.addr); 
+		notes = (EditText)getView().findViewById(R.id.notes); 
+		feed = (EditText)getView().findViewById(R.id.feed);
+		types = (RadioGroup)getView().findViewById(R.id.types);
+		location = (TextView)getView().findViewById(R.id.location);
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		
+		helper = new RestaurantHelper(getActivity());
+		restaurantId = getActivity().getIntent().getStringExtra(LunchList.ID_EXTRA);
+		
+		if(restaurantId != null){
 			load();
 		}
 	}
@@ -60,16 +77,10 @@ public class DetailFragment extends Activity {
 	@Override
 	public void onPause() {
 		save();
+		helper.close();
 		locMgr.removeUpdates(onLocationChange);
 		
 		super.onPause();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-
-		helper.close();
 	}
 
 	@Override
@@ -83,41 +94,28 @@ public class DetailFragment extends Activity {
 	}
 
 	@Override
-	public void onRestoreInstanceState(Bundle state) {
-		super.onRestoreInstanceState(state);
-
-		name.setText(state.getString("name"));
-		address.setText(state.getString("address"));
-		notes.setText(state.getString("notes"));
-		types.check(state.getInt("type"));
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		new MenuInflater(this).inflate(R.menu.details_option, menu);
-		return super.onCreateOptionsMenu(menu);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.details_option, menu);
 	}
 	
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+	public void onPrepareOptionsMenu(Menu menu) {
 		if(restaurantId == null) {
 			menu.findItem(R.id.location).setEnabled(false);
 			menu.findItem(R.id.map).setEnabled(false);
 		}
-		
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.feed) {
 			if(isNetworkAvailable()) {
-				Intent intent = new Intent(this, FeedActivity.class);
+				Intent intent = new Intent(getActivity(), FeedActivity.class);
 				intent.putExtra(FeedActivity.FEED_URL, feed.getText().toString());
 				startActivity(intent);
 			}
 			else {
-				Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}
@@ -126,7 +124,7 @@ public class DetailFragment extends Activity {
 			return true;
 		}
 		else if(item.getItemId() == R.id.map) {
-			Intent intent = new Intent(this, RestaurantMap.class);
+			Intent intent = new Intent(getActivity(), RestaurantMap.class);
 			intent.putExtra(RestaurantMap.EXTRA_LATITUDE, latitudeCache);
 			intent.putExtra(RestaurantMap.EXTRA_LONGITUDE, longitudeCache);
 			intent.putExtra(RestaurantMap.EXTRA_NAME, name.getText().toString());
@@ -142,7 +140,7 @@ public class DetailFragment extends Activity {
 			helper.updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
 			location.setText(String.valueOf(fix.getLatitude()) + ", " + String.valueOf(fix.getLongitude()));
 			locMgr.removeUpdates(onLocationChange);
-			Toast.makeText(DetailFragment.this, R.string.location_saved, Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.location_saved, Toast.LENGTH_LONG).show();
 		}
 		
 		public void onProviderDisabled(String provider) {
@@ -159,7 +157,7 @@ public class DetailFragment extends Activity {
 	};
 
 	private boolean isNetworkAvailable() {
-		ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = cm.getActiveNetworkInfo();
 		return (info != null);
 	}
