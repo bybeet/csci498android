@@ -10,7 +10,7 @@
 
         <TableRow>
 
-            <TextView android:text="Name:" />
+            <TextView android:text="@string/name" />
 
             <EditText
                 android:id="@+id/name"
@@ -19,7 +19,7 @@
 
         <TableRow>
 
-            <TextView android:text="Address:" />
+            <TextView android:text="@string/address" />
 
             <EditText
                 android:id="@+id/addr"
@@ -28,7 +28,16 @@
 
         <TableRow>
 
-            <TextView android:text="Type:" />
+            <TextView android:text="@string/phone" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="@string/type" />
 
             <RadioGroup android:id="@+id/types" >
 

@@ -10,21 +10,30 @@
 
         <TableRow>
 
-            <TextView android:text="Name:" />
+            <TextView android:text="@string/name" />
 
             <EditText android:id="@+id/name" />
         </TableRow>
 
         <TableRow>
 
-            <TextView android:text="Address:" />
+            <TextView android:text="@string/address" />
 
             <EditText android:id="@+id/addr" />
         </TableRow>
 
         <TableRow>
 
-            <TextView android:text="Type:" />
+            <TextView android:text="@string/phone" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:inputType="phone" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="@string/type" />
 
             <RadioGroup android:id="@+id/types" >
 
@@ -42,9 +51,14 @@
                     android:text="Delivery" />
             </RadioGroup>
         </TableRow>
+
         <TableRow>
+
             <TextView android:text="@string/location" />
-            <TextView android:id="@+id/location" android:text="@string/not_set" />
+
+            <TextView
+                android:id="@+id/location"
+                android:text="@string/not_set" />
         </TableRow>
 
         <EditText

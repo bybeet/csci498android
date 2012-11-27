@@ -28,5 +28,9 @@
     <string name="help">Help</string>
     <string name="alarm_ringtone">Alarm Ringtone</string>
     <string name="alarm_summary">Indicate the ringtone to play when it is lunchtime</string>
+    <string name="name">Name:</string>
+    <string name="address">Address:</string>
+    <string name="phone">Phone:</string>
+    <string name="type">Type:</string>
 
 </resources>
