@@ -51,6 +51,7 @@ public class LunchFragment extends ListFragment {
 	@Override
 	public void onPause () {
 		helper.close();
+		
 		super.onPause();
 	}
 
