@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 public class LunchList extends FragmentActivity implements LunchFragment.OnRestaurantListener {
 
 	public final static String ID_EXTRA = "apt.tutorial._ID";
+	private static final String ARG_REST_ID = "apt.tutorial.ARG_REST_ID";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

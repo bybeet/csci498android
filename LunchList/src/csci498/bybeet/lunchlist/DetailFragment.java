@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 public class DetailFragment extends Fragment {
 
+	private static final String ARG_REST_ID = "apt.tutorial.ARG_REST_ID";
+	
 	EditText name;
 	EditText address;
 	EditText notes;
@@ -36,6 +38,16 @@ public class DetailFragment extends Fragment {
 	double latitudeCache;
 	double longitudeCache;
 
+	public static DetailFragment newInstance(long id){
+		DetailFragment result = new DetailFragment();
+		Bundle args = new Bundle();
+		
+		args.putString(ARG_REST_ID, String.valueOf(id));
+		result.setArguments(args);
+		
+		return result;
+	}
+	
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,18 +72,19 @@ public class DetailFragment extends Fragment {
 		feed = (EditText)getView().findViewById(R.id.feed);
 		types = (RadioGroup)getView().findViewById(R.id.types);
 		location = (TextView)getView().findViewById(R.id.location);
-	}
-	
-	@Override
-	public void onResume(){
-		super.onResume();
 		
-		helper = new RestaurantHelper(getActivity());
-		restaurantId = getActivity().getIntent().getStringExtra(LunchList.ID_EXTRA);
+		Bundle args = getArguments();
 		
-		if(restaurantId != null){
-			load();
+		if(args != null){
+			loadRestaurant(args.getString(ARG_REST_ID));
 		}
+	}
+
+	public RestaurantHelper getHelper(){
+		if(helper == null){
+			helper = new RestaurantHelper(getActivity());
+		}
+		return helper;
 	}
 
 	@Override
@@ -187,28 +200,36 @@ public class DetailFragment extends Fragment {
 	}
 
 	private void load() {
-		Cursor c = helper.getById(restaurantId);
+		Cursor c = getHelper().getById(restaurantId);
 
 		c.moveToFirst();
-		name.setText(helper.getName(c));
-		address.setText(helper.getAddress(c));
-		notes.setText(helper.getNotes(c));
-		feed.setText(helper.getFeed(c));
+		name.setText(getHelper().getName(c));
+		address.setText(getHelper().getAddress(c));
+		notes.setText(getHelper().getNotes(c));
+		feed.setText(getHelper().getFeed(c));
 
-		if (helper.getType(c).equals("sit_down")) {
+		if (getHelper().getType(c).equals("sit_down")) {
 			types.check(R.id.sit_down);
 		}
-		else if (helper.getType(c).equals("take_out")) {
+		else if (getHelper().getType(c).equals("take_out")) {
 			types.check(R.id.take_out);
 		}
 		else {
 			types.check(R.id.delivery);
 		}
 
-		location.setText(String.valueOf(helper.getLatitude(c)) + ", " + String.valueOf(helper.getLongitude(c)));
-		latitudeCache = helper.getLatitude(c);
-		longitudeCache = helper.getLatitude(c);
+		location.setText(String.valueOf(getHelper().getLatitude(c)) + ", " + String.valueOf(getHelper().getLongitude(c)));
+		latitudeCache = getHelper().getLatitude(c);
+		longitudeCache = getHelper().getLatitude(c);
 		
 		c.close();
+	}
+	
+	public void loadRestaurant(String restaurantId){ 
+		this.restaurantId=restaurantId;
+		
+		if(restaurantId!=null){
+			load();
+		}
 	}
 }
