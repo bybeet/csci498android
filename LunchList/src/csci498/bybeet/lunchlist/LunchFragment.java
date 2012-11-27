@@ -1,5 +1,6 @@
 package csci498.bybeet.lunchlist;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 @SuppressWarnings("deprecation")
 public class LunchFragment extends ListFragment {
 
@@ -44,16 +46,6 @@ public class LunchFragment extends ListFragment {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		initList();
 		prefs.registerOnSharedPreferenceChangeListener(prefListener);
-	}
-
-	private void initList() {
-		if(restaurants != null) {
-			restaurants.close();
-		}
-		
-		restaurants = helper.getAll(prefs.getString("sort_order", "name"));
-		adapter = new RestaurantAdapter(restaurants);
-		setListAdapter(adapter);
 	}
 
 	@Override
@@ -87,6 +79,24 @@ public class LunchFragment extends ListFragment {
 
 		return(super.onOptionsItemSelected(item));
 	}
+	
+	private void initList() {
+		if(restaurants != null) {
+			restaurants.close();
+		}
+		
+		restaurants = helper.getAll(prefs.getString("sort_order", "name"));
+		adapter = new RestaurantAdapter(restaurants);
+		setListAdapter(adapter);
+	}
+	
+	private SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			if (key.equals("sort_order")){
+				initList();
+			}
+		}
+	};
 	
 	public interface OnRestaurantListener {
 		void onRestaurantSelected(long id);
@@ -147,12 +157,4 @@ public class LunchFragment extends ListFragment {
 			}
 		}
 	}
-	
-	private SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			if (key.equals("sort_order")){
-				initList();
-			}
-		}
-	};
 }
