@@ -9,7 +9,7 @@
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="40"
-        class="apt.tutorial.LunchFragment" />
+        class="csci498.bybeet.lunchlist.LunchFragment" />
 
     <FrameLayout
         android:id="@+id/details"
