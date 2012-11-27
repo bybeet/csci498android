@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 
 class RestaurantHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "lunchlist.db";
-	private static final int SCHEMA_VERSION = 3;
+	private static final int SCHEMA_VERSION = 4;
 
 
 	public RestaurantHelper(Context context) {
@@ -30,6 +30,9 @@ class RestaurantHelper extends SQLiteOpenHelper {
 		if(oldVersion < 3) {
 			db.execSQL("ALTER TABLE restaurants ADD COLUMN lat REAL");
 			db.execSQL("ALTER TABLE restaurants ADD COLUMN lon REAL");
+		}
+		if(oldVersion < 4){
+			db.execSQL("ALTER TABLE restaurants ADD COLUMN phone TEXT");
 		}
 			
 	}
