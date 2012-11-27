@@ -90,7 +90,7 @@ public class DetailFragment extends Fragment {
 	@Override
 	public void onPause() {
 		save();
-		helper.close();
+		getHelper().close();
 		locMgr.removeUpdates(onLocationChange);
 		
 		super.onPause();
@@ -153,7 +153,7 @@ public class DetailFragment extends Fragment {
 	
 	private LocationListener onLocationChange = new LocationListener() {
 		public void onLocationChanged(Location fix) {
-			helper.updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
+			getHelper().updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
 			location.setText(String.valueOf(fix.getLatitude()) + ", " + String.valueOf(fix.getLongitude()));
 			locMgr.removeUpdates(onLocationChange);
 			Toast.makeText(getActivity(), R.string.location_saved, Toast.LENGTH_LONG).show();
@@ -194,10 +194,10 @@ public class DetailFragment extends Fragment {
 			}
 
 			if(restaurantId == null) {
-				helper.insert(name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
+				getHelper().insert(name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
 			}
 			else {
-				helper.update(restaurantId, name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
+				getHelper().update(restaurantId, name.getText().toString(), address.getText().toString(), type, notes.getText().toString(), feed.getText().toString());
 			}
 		}
 	}
