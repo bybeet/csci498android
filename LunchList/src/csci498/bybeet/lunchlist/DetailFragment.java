@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -152,6 +153,13 @@ public class DetailFragment extends Fragment {
 		}
 		else if(item.getItemId() == R.id.help){
 			startActivity(new Intent(getActivity(), HelpPage.class));
+		}
+		else if(item.getItemId() == R.id.call){
+			String toDial = "tel:" + phone.getText().toString();
+			
+			if(toDial.length() > 4){
+				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(toDial)));
+			}
 		}
 
 		return super.onOptionsItemSelected(item);
