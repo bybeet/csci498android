@@ -32,5 +32,6 @@
     <string name="address">Address:</string>
     <string name="phone">Phone:</string>
     <string name="type">Type:</string>
+    <string name="call">Call</string>
 
 </resources>

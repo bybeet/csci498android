@@ -119,6 +119,10 @@ public class DetailFragment extends Fragment {
 			menu.findItem(R.id.location).setEnabled(false);
 			menu.findItem(R.id.map).setEnabled(false);
 		}
+		
+		if(isTelephonyAvailable()){
+			menu.findItem(R.id.call).setEnabled(true);
+		}
 	}
 
 	@Override

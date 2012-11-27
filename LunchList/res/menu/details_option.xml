@@ -9,4 +9,7 @@
         <item android:id="@+id/map"
             android:title="@string/show_map"
             android:icon="@drawable/ic_menu_mapmode" />
+        <item android:id="@+id/call"
+            android:title="@string/call"
+            android:enabled="false" />
     </menu>
