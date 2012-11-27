@@ -25,5 +25,6 @@
     <string name="notification_title">Use a Notification</string>
     <string name="notification_summary">Check if you want a status bar icon at lunchtime, or uncheck for a full-screen notice.</string>
     <string name="empty"/>
+    <string name="help">Help</string>
 
 </resources>

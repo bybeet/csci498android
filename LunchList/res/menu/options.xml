@@ -6,4 +6,7 @@
     <item android:id="@+id/prefs"
         android:title="Settings"
         android:icon="@drawable/ic_menu_preferences"/>
+    <item android:id="@+id/help"
+        android:title="@string/help"
+        android:icon="@drawable/ic_menu_help"/>
 </menu>
