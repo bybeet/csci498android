@@ -38,13 +38,13 @@ class RestaurantHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getAll(String orderBy) {
-		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon FROM restaurants ORDER BY "+orderBy, null);
+		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon, phone FROM restaurants ORDER BY "+orderBy, null);
 	}
 
 	public Cursor getById(String id) {
 		String[] args = {id};
 
-		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon FROM restaurants WHERE _ID=?", args);
+		return getReadableDatabase().rawQuery("SELECT _id, name, address, type, notes, feed, lat, lon, phone FROM restaurants WHERE _ID=?", args);
 	}
 
 	public void insert(String name, String address, String type, String notes, String feed, String phone) {
