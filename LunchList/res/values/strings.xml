@@ -26,5 +26,7 @@
     <string name="notification_summary">Check if you want a status bar icon at lunchtime, or uncheck for a full-screen notice.</string>
     <string name="empty"/>
     <string name="help">Help</string>
+    <string name="alarm_ringtone">Alarm Ringtone</string>
+    <string name="alarm_summary">Indicate the ringtone to play when it is lunchtime</string>
 
 </resources>
